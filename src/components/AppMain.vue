@@ -1,9 +1,14 @@
 <script>
-
+import axios from 'axios';
 import AppCard from '../components/AppCard.vue'
 export default {
     components: {
         AppCard,
+    },
+    data() {
+        return {
+            // store,
+        };
     },
 }
 </script>
