@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios';
+import { store } from '../store.js'
 import AppCard from '../components/AppCard.vue'
 export default {
     components: {
@@ -7,16 +7,17 @@ export default {
     },
     data() {
         return {
-            // store,
+            store,
         };
     },
 }
 </script>
 
 <template>
-    Questo è AppMain
+    <div v-for="movie in store.moviesArray">
+        <AppCard :cardObj="movie" />
 
-    <AppCard />
+    </div>
 </template>
 
 <style scoped lang="scss"></style>
