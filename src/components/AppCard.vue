@@ -43,6 +43,10 @@ export default {
                 }
             }
             return checkFlag;
+        },
+        getEvaluation(avgVote) {
+            avgVote = Math.ceil((avgVote * 5) / 10);
+            return avgVote;
         }
     },
 }
@@ -60,7 +64,19 @@ export default {
             <li>Titolo: {{ cardObj.title || cardObj.name }}</li>
             <li>Titolo originale: {{ cardObj.original_title || cardObj.original_name }}</li>
             <li> Lingua: {{ getFlagIcon(cardObj.original_language) }}</li>
-            <li>Voto: {{ cardObj.vote_average }}</li>
+            <li>
+                <div v-if="cardObj.vote_average !== 0">
+                    Voto: <span v-for="i in getEvaluation(cardObj.vote_average)">
+                        <i class="fa-solid fa-star"></i>
+                    </span>
+                    <span v-for="i in (5 - getEvaluation(cardObj.vote_average))">
+                        <i class="fa-regular fa-star"></i>
+                    </span>
+                </div>
+                <div v-else>
+                    <span class="fst-italic">punteggio non disponibile</span>
+                </div>
+            </li>
         </ul>
     </div>
 </template>
