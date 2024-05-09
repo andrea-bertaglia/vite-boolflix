@@ -22,6 +22,7 @@ export default {
             // ricerca film: passo i parametri alla chiamata API (chiave e titolo da cercare)
             params: {
               api_key: this.store.apiKey,
+              language: "it_IT",
               query: this.store.searchQuery
             },
           })
@@ -37,6 +38,7 @@ export default {
             // ricerca serie tv: passo i parametri alla chiamata API (chiave e titolo da cercare)
             params: {
               api_key: this.store.apiKey,
+              language: "it_IT",
               query: this.store.searchQuery
             },
           })
