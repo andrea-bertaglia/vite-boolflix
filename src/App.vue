@@ -16,36 +16,43 @@ export default {
   },
   methods: {
     getSearchResult() {
-      axios
-        .get('https://api.themoviedb.org/3/search/movie', {
-          // ricerca film: passo i parametri alla chiamata API (chiave e titolo da cercare)
-          params: {
-            api_key: this.store.apiKey,
-            query: this.store.searchQuery
-          },
-        })
-        .then((resp) => {
-          // salvo l'oggetto della risposta nell'array movie
-          this.store.moviesArray = resp.data.results;
-          console.log(this.store.moviesArray);
-          // ripulisco il campo di ricerca
-          // this.store.searchQuery = "";
-        });
-      axios
-        .get('https://api.themoviedb.org/3/search/tv', {
-          // ricerca serie tv: passo i parametri alla chiamata API (chiave e titolo da cercare)
-          params: {
-            api_key: this.store.apiKey,
-            query: this.store.searchQuery
-          },
-        })
-        .then((resp) => {
-          // salvo l'oggetto della risposta nell'array tv series
-          this.store.tvSeriesArray = resp.data.results;
-          console.log(this.store.tvSeriesArray);
-          // ripulisco il campo di ricerca
-          this.store.searchQuery = "";
-        });
+      if (this.store.searchQuery !== "") {
+        axios
+          .get('https://api.themoviedb.org/3/search/movie', {
+            // ricerca film: passo i parametri alla chiamata API (chiave e titolo da cercare)
+            params: {
+              api_key: this.store.apiKey,
+              query: this.store.searchQuery
+            },
+          })
+          .then((resp) => {
+            // salvo l'oggetto della risposta nell'array movie
+            this.store.moviesArray = resp.data.results;
+            console.log(this.store.moviesArray);
+            // ripulisco il campo di ricerca
+            // this.store.searchQuery = "";
+          });
+        axios
+          .get('https://api.themoviedb.org/3/search/tv', {
+            // ricerca serie tv: passo i parametri alla chiamata API (chiave e titolo da cercare)
+            params: {
+              api_key: this.store.apiKey,
+              query: this.store.searchQuery
+            },
+          })
+          .then((resp) => {
+            // salvo l'oggetto della risposta nell'array tv series
+            this.store.tvSeriesArray = resp.data.results;
+            console.log(this.store.tvSeriesArray);
+            // ripulisco il campo di ricerca
+            this.store.searchQuery = "";
+            this.store.errorMessage = false
+
+          });
+      }
+      else {
+        this.store.errorMessage = true
+      }
     },
   },
 

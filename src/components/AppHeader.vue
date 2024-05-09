@@ -15,6 +15,8 @@ export default {
         <div class="header-logo pt-3">
             <span class="text-danger fw-bold fs-2">BOOLFLIX</span>
         </div>
+        <div v-if="this.store.errorMessage" class="error-message text-danger fst-italic pt-3">Attenzione: digita la
+            parola chiave da cercare</div>
         <div class="header-search pt-3">
             <!-- input salvato nello store -->
             <input type="text" placeholder="Cosa vuoi cercare?" v-model="store.searchQuery"
