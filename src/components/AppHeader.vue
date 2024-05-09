@@ -17,7 +17,8 @@ export default {
         </div>
         <div class="header-search">
             <!-- input salvato nello store -->
-            <input type="text" placeholder="Cosa vuoi cercare?" v-model="store.searchQuery">
+            <input type="text" placeholder="Cosa vuoi cercare?" v-model="store.searchQuery"
+                @keyup.enter="$emit('btnSearchClicked')">
             <!-- emit per collegare l'ascolto del click all'avvio della funzione getSearchResult -->
             <button @click="$emit('btnSearchClicked')">Cerca</button>
         </div>

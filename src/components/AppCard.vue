@@ -51,11 +51,10 @@ export default {
 <template>
     <div class="card">
         <ul>
-            <li>Titolo: {{ cardObj.title }}</li>
-            <li>Titolo originale: {{ cardObj.original_title }}</li>
+            <li>Titolo: {{ cardObj.title || cardObj.name }}</li>
+            <li>Titolo originale: {{ cardObj.original_title || cardObj.original_name }}</li>
             <li> Lingua: {{ getFlagIcon(cardObj.original_language) }}</li>
             <li>Voto: {{ cardObj.vote_average }}</li>
-
         </ul>
     </div>
 </template>
