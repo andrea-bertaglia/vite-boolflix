@@ -11,16 +11,16 @@ export default {
 </script>
 
 <template>
-    <header class="py-3">
-        <div class="header-logo">
-            <span>BOOLFLIX</span>
+    <header class="py-3 bg-dark container-fluid d-flex justify-content-between align-items-center">
+        <div class="header-logo pt-3">
+            <span class="text-danger fw-bold fs-2">BOOLFLIX</span>
         </div>
-        <div class="header-search">
+        <div class="header-search pt-3">
             <!-- input salvato nello store -->
             <input type="text" placeholder="Cosa vuoi cercare?" v-model="store.searchQuery"
                 @keyup.enter="$emit('btnSearchClicked')">
             <!-- emit per collegare l'ascolto del click all'avvio della funzione getSearchResult -->
-            <button @click="$emit('btnSearchClicked')">Cerca</button>
+            <!-- <button @click="$emit('btnSearchClicked')">Cerca</button> -->
         </div>
     </header>
 </template>
