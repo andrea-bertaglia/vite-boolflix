@@ -1,7 +1,9 @@
 <script>
-
+import axios from 'axios';
+import { store } from '../store';
 
 export default {
+
     props: {
         cardObj: Object,
     },
@@ -33,6 +35,7 @@ export default {
                     flagIcon: "🇨🇳"
                 },
             ],
+            store,
         };
     },
     methods: {
@@ -47,15 +50,27 @@ export default {
         getEvaluation(avgVote) {
             avgVote = Math.ceil((avgVote * 5) / 10);
             return avgVote;
-        }
-    },
-}
+        },
+        getCast(id) {
+            axios
+                .get(`https://api.themoviedb.org/3/movie/${id}/credits`, {
+                    params: {
+                        api_key: this.store.apiKey,
+                    },
+                })
+                .then((resp) => {
+                    this.store.castMovieArray = resp.data.cast;
+                    console.log("CHECK", this.store.castMovieArray);
+                });
+        },
+    }
+}    
 </script>
 
 <template>
     <div class="card-flip">
         <!-- card front -->
-        <div class="card frontside border rounded-0 border-secondary-subtle">
+        <div @mouseover="getCast(cardObj.id)" class="card frontside border rounded-0 border-secondary-subtle">
             <img v-if="cardObj.poster_path === null" src="https://placehold.co/342x513?text=Immagine+non+disponibile"
                 alt="Immagine non disponibile">
             <img v-else :src="`https://image.tmdb.org/t/p/w342/${cardObj.poster_path}`"
@@ -93,6 +108,12 @@ export default {
                     </div>
                 </span>
                 <span v-else class="fw-light fst-italic">n/a</span>
+            </li>
+            <li class="fw-bold">Cast:
+                <div class="fw-light">
+                    <span v-for="curElem in this.store.castMovieArray.slice(0, 5)"> {{ curElem.name }}{{ " " }}</span>
+                    <span></span>
+                </div>
             </li>
         </ul>
         <!-- /card back -->
@@ -160,7 +181,7 @@ export default {
     max-height: 100%;
 
     .overview-text {
-        max-height: 200px;
+        max-height: 100px;
         overflow-y: auto;
         font-size: .8rem;
     }
