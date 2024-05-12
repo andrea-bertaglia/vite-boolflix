@@ -8,6 +8,7 @@ export default {
     data() {
         return {
             store,
+            typeOfElem: "",
         };
     },
 }
@@ -20,10 +21,11 @@ export default {
                 <div class="col">
                     <div class="row">
                         <div class="col-sm-6 col-md-4 movie" v-for="movie in store.moviesArray">
-                            <AppCard :cardObj="movie" />
+                            <AppCard :cardObj="movie" typeOfElem="movie" />
                         </div>
                         <div class="col-sm-6 col-md-4 tv" v-for="tvSerie in store.tvSeriesArray">
-                            <AppCard :cardObj="tvSerie" />
+                            <AppCard :cardObj="tvSerie" typeOfElem="tv" />
+
                         </div>
                     </div>
 

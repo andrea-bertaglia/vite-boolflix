@@ -49,8 +49,7 @@ export default {
             // ripulisco il campo di ricerca
             this.store.searchQuery = "";
             this.store.errorMessage = false
-
-          });
+          })
       }
       else {
         this.store.errorMessage = true
@@ -63,7 +62,7 @@ export default {
 
 <template>
 
-  <AppHeader @btnSearchClicked="getSearchResult" />
+  <AppHeader @enterQuery="getSearchResult" />
   <AppMain />
 
 </template>

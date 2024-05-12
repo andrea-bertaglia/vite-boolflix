@@ -6,6 +6,7 @@ export default {
 
     props: {
         cardObj: Object,
+        typeOfElem: String,
     },
     data() {
         return {
@@ -52,18 +53,24 @@ export default {
             return avgVote;
         },
         getCast(id) {
+
+            console.log(this.typeOfElem);
+
             axios
-                .get(`https://api.themoviedb.org/3/movie/${id}/credits`, {
-                    params: {
-                        api_key: this.store.apiKey,
-                    },
+                .get(`https://api.themoviedb.org/3/${this.typeOfElem}/${id}/credits`, {
+                    params: { api_key: this.store.apiKey },
                 })
                 .then((resp) => {
-                    this.store.castMovieArray = resp.data.cast;
-                    console.log("CHECK", this.store.castMovieArray);
-                });
+                    this.store.castTotalArray = resp.data.cast;
+                    console.log("CREAZIONE ARRAY CAST CON ID", this.store.castTotalArray);
+                })
+
+
+
         },
-    }
+
+
+    },
 }    
 </script>
 
@@ -111,8 +118,8 @@ export default {
             </li>
             <li class="fw-bold">Cast:
                 <div class="fw-light">
-                    <span v-for="curElem in this.store.castMovieArray.slice(0, 5)"> {{ curElem.name }}{{ " " }}</span>
-                    <span></span>
+                    <span v-for="(curElem, index) in this.store.castTotalArray.slice(0, 5)"> {{ curElem.name }}<span
+                            v-if="index !== 4">{{ ", " }}</span></span v-else>{{ "." }}<span></span>
                 </div>
             </li>
         </ul>

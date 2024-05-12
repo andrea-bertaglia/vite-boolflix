@@ -19,10 +19,10 @@ export default {
             parola chiave da cercare</div>
         <div class="header-search pt-3">
             <!-- input salvato nello store -->
+            <!-- emit per collegare l'ascolto dell'enter all'avvio della funzione getSearchResult -->
             <input type="text" placeholder="Cosa vuoi cercare?" v-model="store.searchQuery"
-                @keyup.enter="$emit('btnSearchClicked')">
-            <!-- emit per collegare l'ascolto del click all'avvio della funzione getSearchResult -->
-            <!-- <button @click="$emit('btnSearchClicked')">Cerca</button> -->
+                @keyup.enter="$emit('enterQuery')">
+            <!-- <button @click="$emit('enterQuery')">Cerca</button> -->
         </div>
     </header>
 </template>

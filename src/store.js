@@ -6,5 +6,5 @@ export const store = reactive({
   moviesArray: [],
   tvSeriesArray: [],
   errorMessage: false,
-  castMovieArray: [],
+  castTotalArray: [],
 });
