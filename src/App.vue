@@ -5,6 +5,10 @@ import AppHeader from './components/AppHeader.vue'
 import AppMain from './components/AppMain.vue'
 
 export default {
+  created() {
+    this.getGenres("movie");
+    this.getGenres("tv");
+  },
   components: {
     AppHeader,
     AppMain
@@ -54,6 +58,21 @@ export default {
       else {
         this.store.errorMessage = true
       }
+    },
+    getGenres(param) {
+      axios
+        .get(`https://api.themoviedb.org/3/genre/${param}/list`, {
+          params: { api_key: this.store.apiKey },
+        })
+        .then((resp) => {
+          if (param === "movie") {
+            this.store.movieGenres = resp.data.genres;
+            console.log("array di generi movie", resp.data.genres);
+          } else {
+            this.store.tvGenres = resp.data.genres;
+            console.log("array di generi tv", resp.data.genres);
+          }
+        });
     },
   },
 

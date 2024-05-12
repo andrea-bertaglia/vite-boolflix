@@ -4,10 +4,6 @@ import { store } from '../store';
 
 export default {
 
-    props: {
-        cardObj: Object,
-        typeOfElem: String,
-    },
     data() {
         return {
             flagArray: [
@@ -37,7 +33,13 @@ export default {
                 },
             ],
             store,
+            selectedGenreId: 0,
+            genreNames: [],
         };
+    },
+    props: {
+        cardObj: Object,
+        typeOfElem: String,
     },
     methods: {
         getFlagIcon(checkFlag) {
@@ -53,25 +55,49 @@ export default {
             return avgVote;
         },
         getCast(id) {
-
             console.log(this.typeOfElem);
-
+            // genero la chiamata API con path dinamico in base alla props typeOfElem
             axios
                 .get(`https://api.themoviedb.org/3/${this.typeOfElem}/${id}/credits`, {
                     params: { api_key: this.store.apiKey },
                 })
                 .then((resp) => {
                     this.store.castTotalArray = resp.data.cast;
-                    console.log("CREAZIONE ARRAY CAST CON ID", this.store.castTotalArray);
+                    console.log("CREAZIONE ARRAY CAST TRAMITE ID", this.store.castTotalArray);
                 })
+        },
+        getGenres(listGenres, type) {
+            console.log("lista id_genres passata dal template", listGenres);
+            const genreNames = [];
 
-
-
+            // Se è un movie, cerco i generi nell'array movieGenres
+            if (type === "movie") {
+                for (let i = 0; i < listGenres.length; i++) {
+                    const genreId = listGenres[i];
+                    for (let y = 0; y < this.store.movieGenres.length; y++) {
+                        if (this.store.movieGenres[y].id === genreId) {
+                            genreNames.push(this.store.movieGenres[y].name);
+                            break;
+                        }
+                    }
+                }
+                // Se è un tv, cerco i generi nell'array tvGenres
+            } else if (type === "tv") {
+                for (let i = 0; i < listGenres.length; i++) {
+                    const genreId = listGenres[i];
+                    for (let y = 0; y < this.store.tvGenres.length; y++) {
+                        if (this.store.tvGenres[y].id === genreId) {
+                            genreNames.push(this.store.tvGenres[y].name);
+                            break;
+                        }
+                    }
+                }
+            }
+            return genreNames.join(', ');
         },
 
-
-    },
-}    
+    }
+}
 </script>
 
 <template>
@@ -122,6 +148,13 @@ export default {
                             v-if="index !== 4">{{ ", " }}</span></span v-else>{{ "." }}<span></span>
                 </div>
             </li>
+
+
+            <li class="fw-bold">Genere:
+                <span class="fw-light">{{ getGenres(cardObj.genre_ids, typeOfElem) }}</span>
+            </li>
+
+
         </ul>
         <!-- /card back -->
     </div>
@@ -188,9 +221,9 @@ export default {
     max-height: 100%;
 
     .overview-text {
-        max-height: 100px;
+        max-height: 80px;
         overflow-y: auto;
-        font-size: .8rem;
+        font-size: .5rem;
     }
 }
 

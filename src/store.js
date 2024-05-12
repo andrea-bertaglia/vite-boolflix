@@ -7,4 +7,6 @@ export const store = reactive({
   tvSeriesArray: [],
   errorMessage: false,
   castTotalArray: [],
+  movieGenres: [],
+  tvGenres: [],
 });
